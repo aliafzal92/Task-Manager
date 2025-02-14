@@ -2,6 +2,8 @@ import "dotenv/config";
 import "./db/connection.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import { notFound } from "./middlewares/not-found.js";
+import { errorHandler } from "./middlewares/error-handler.js";
 
 import { connectDb } from "./db/connection.js";
 import express from "express";
@@ -23,6 +25,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/tasks", tasks);
+
+app.use(notFound)
+app.use(errorHandler)
 
 const start = async () => {
   try {
